@@ -1,0 +1,25 @@
+<meta charset="utf-8">
+<link href="style.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<h1> ToDo List </h1>
+
+<form action="/addTask" method="POST">
+  <input placeholder="task" id="input_task" name=task>
+  <button> Add Task </button>
+</form>
+
+<ul>
+  <% for(i=0; i<tasks.length; i++) {%>
+    <li _id="<%= tasks[i]._id %>"  isDone="<%= tasks[i].isDone %>">  
+            <span><%= tasks[i].task %></span>
+            <span class="fa fa-trash" ></span >
+            <b> update </b>
+            <i> done </i>
+
+    </li>
+   <% } %>
+    
+</ul>
+
+
+<script src="main.js"> </script>
