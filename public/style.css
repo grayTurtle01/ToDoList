@@ -1,3 +1,8 @@
 li{
   font-size : 25px
 }
+
+.completed{
+  color: gray;
+  text-decoration: line-through;
+}

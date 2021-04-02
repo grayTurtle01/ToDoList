@@ -72,8 +72,8 @@ for( i of is )
       li.setAttribute("isDone", "false")
     }
     
-    //id = li.getAttribute("_id")
-    //toogleTask( id, isDone )
+    id = li.getAttribute("_id")
+    toogleTask( id, isDone )
   }
 
 
@@ -84,7 +84,7 @@ async function toogleTask( id, isDone ){
       method : "put",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
-        "isDone": isDone
+        "isDone": Boolean(isDone)
       })
   })
   data = await res.json()
