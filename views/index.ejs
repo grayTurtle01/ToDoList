@@ -11,10 +11,15 @@
 <ul>
   <% for(i=0; i<tasks.length; i++) {%>
     <li _id="<%= tasks[i]._id %>"  isDone="<%= tasks[i].isDone %>">  
-            <span><%= tasks[i].task %></span>
+            <% if(tasks[i].isDone == false) {%>
+              <span><%= tasks[i].task %></span>
+            <%} else {%>
+              <span class="completed"><%= tasks[i].task %></span>
+              
+            <%} %>  
             <span class="fa fa-trash" ></span >
             <b> update </b>
-            <i> done </i>
+            <i> toogle </i>
 
     </li>
    <% } %>

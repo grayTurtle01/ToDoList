@@ -1,3 +1,4 @@
+//https://pumpkin-cobbler-30573.herokuapp.com/
 express = require('express')
 require('dotenv').config()
 
@@ -88,7 +89,7 @@ server.put("/updateTask/:id", (req,res) => {
 
 server.put("/toogleTask/:id", (req,res) => {
   req_id = req.params.id
-  console.log(  req.body )
+  //console.log(  req.body )
   _id = MongoClient.ObjectId( req_id )
   
   db.collection('tasks').findOneAndUpdate( 
@@ -96,6 +97,7 @@ server.put("/toogleTask/:id", (req,res) => {
      {
        $set:{
           isDone: req.body.isDone
+          //~ isDone: true
        }
      },
      {
