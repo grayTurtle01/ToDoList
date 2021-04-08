@@ -2,19 +2,19 @@
 express = require('express')
 require('dotenv').config()
 
+
 // MongoDB
 MongoClient = require('mongodb')
-dbName = "miDB"
-//uri = "mongodb://localhost/"+dbName 
 
 uri = process.env.URI
+
 
 let db
 
 MongoClient.connect(uri, {useUnifiedTopology: true})
   .then( client => {
       console.log("db working")
-      db = client.db(dbName)
+      db = client.db("miDB")
     })
 
 
@@ -31,8 +31,15 @@ server.set('view engine', 'ejs')
 server.get("/", (req,res) => {    
   db.collection('tasks').find().toArray()
   .then( data =>{
-    //console.log(data)
+    //console.log(" GET /")
     res.render("index.ejs", {tasks : data} )
+   })
+})
+
+server.get("/api", (req,res) => {    
+  db.collection('tasks').find().toArray()
+  .then( data =>{
+    res.send( data )
    })
 })
 
@@ -47,17 +54,25 @@ server.post("/addTask", (req,res) => {
      })
      
   //~ res.send( JSON.stringify({}) )
+  //res.json("Task added")
   res.redirect("/")
 })
 
 server.delete("/deleteTask/:id", (req,res) => {
+  //req_id = req.params.id
   req_id = req.body.id
   _id = MongoClient.ObjectId( req_id )
   
   db.collection('tasks').deleteOne( {"_id": _id})
-    .then( x =>{
-      console.log("Task Deleted")
-      res.send( JSON.stringify("Task Deleted") )
+    .then( x => {
+      if( x.deletedCount == 1){
+        console.log("Task Deleted")
+        res.send( JSON.stringify("Task Deleted") )
+     }
+     else{
+        console.log("Match Not Found")
+        res.send( JSON.stringify("Mathc Not Found") )
+     }
     })
   
 })
@@ -79,7 +94,8 @@ server.put("/updateTask/:id", (req,res) => {
      }
      
      )
-    .then( x =>{
+    .then( x => {
+      //console.log(x)
       console.log("Task Updated")
       res.send( JSON.stringify("Task Updated") )
     })
@@ -89,15 +105,14 @@ server.put("/updateTask/:id", (req,res) => {
 
 server.put("/toogleTask/:id", (req,res) => {
   req_id = req.params.id
-  //console.log(  req.body )
+  //~ console.log(  req.body, req.body.isDone )
   _id = MongoClient.ObjectId( req_id )
   
   db.collection('tasks').findOneAndUpdate( 
      {"_id": _id},
      {
        $set:{
-          isDone: req.body.isDone
-          //~ isDone: true
+          isDone: !req.body.isDone
        }
      },
      {
@@ -105,7 +120,7 @@ server.put("/toogleTask/:id", (req,res) => {
      }
      
      )
-    .then( x =>{
+    .then( x => {
       console.log("Task Toogled")
       res.send( JSON.stringify("Task Toogled") )
     })

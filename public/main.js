@@ -4,6 +4,7 @@ strongs = document.getElementsByClassName('fa-trash')
 for( strong of strongs )
   strong.onclick = function(){
     li = this.parentNode
+    console.log(li.children[0].innerText)
     id = li.getAttribute("_id")
     deleteTask( id )
   }
@@ -49,29 +50,22 @@ async function updateTask( id ){
   location.reload()
 }
 
-//Doned Task
-is = document.getElementsByTagName('i')
+//Done Task
+is = document.getElementsByClassName("fa-check")  
 
 for( i of is )
   i.onclick = function(){
+    
     li = this.parentNode
-    isDone = li.getAttribute("isDone")
-    console.log(isDone)
+    isDone_str = li.getAttribute("isDone")
+    
+    if( isDone_str == "false")
+      isDone = false
+    else
+      isDone = true
     
     task_span = li.children[0]
-    //console.log(isDone)
-    
-    if( isDone == "false" ){
-      task_span.style.textDecoration = "line-through"
-      isDone = true
-      li.setAttribute("isDone", "true")
-    }
-    if( isDone == "true" ){
-      task_span.style.textDecoration  = ""
-      isDone = false
-      li.setAttribute("isDone", "false")
-    }
-    
+   
     id = li.getAttribute("_id")
     toogleTask( id, isDone )
   }
@@ -84,11 +78,11 @@ async function toogleTask( id, isDone ){
       method : "put",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
-        "isDone": Boolean(isDone)
+        "isDone": isDone
       })
   })
   data = await res.json()
-  console.log( data )
+  //console.log( data )
   location.reload()
 }
 

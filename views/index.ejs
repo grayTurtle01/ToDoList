@@ -9,20 +9,21 @@
 </form>
 
 <ul>
-  <% for(i=0; i<tasks.length; i++) {%>
-    <li _id="<%= tasks[i]._id %>"  isDone="<%= tasks[i].isDone %>">  
+  <% for(i = 0; i < tasks.length ; i++) { %>
+    <li _id="<%= tasks[i]._id %>"  isDone="<%=tasks[i].isDone%>">  
+            
             <% if(tasks[i].isDone == false) {%>
               <span><%= tasks[i].task %></span>
             <%} else {%>
               <span class="completed"><%= tasks[i].task %></span>
-              
             <%} %>  
-            <span class="fa fa-trash" ></span >
-            <b> update </b>
-            <i> toogle </i>
-
+            
+            <i class="fa fa-trash" ></i >
+            <i class="fa fa-check"></i>
+            <b class="fa fa-edit"></b>
     </li>
-   <% } %>
+    
+  <% } %>
     
 </ul>
 
