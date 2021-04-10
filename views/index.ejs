@@ -3,6 +3,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <h1> ToDo List </h1>
 
+<h3>Tasks Left: <%= tasksLeft %></h3>
+
 <form action="/addTask" method="POST">
   <input placeholder="task" id="input_task" name=task>
   <button> Add Task </button>

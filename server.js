@@ -28,12 +28,13 @@ server.use( express.static('public') )
 server.set('view engine', 'ejs')
 
 // Routes
-server.get("/", (req,res) => {    
-  db.collection('tasks').find().toArray()
-  .then( data =>{
+server.get("/", async (req,res) => {    
+  data = await db.collection('tasks').find().toArray()
+  tasksLeft = await db.collection('tasks').countDocuments({isDone:false})
+  //.then( data =>{
     //console.log(" GET /")
-    res.render("index.ejs", {tasks : data} )
-   })
+  res.render("index.ejs", {tasks : data, tasksLeft: tasksLeft } )
+   //})
 })
 
 server.get("/api", (req,res) => {    
